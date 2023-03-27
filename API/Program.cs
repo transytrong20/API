@@ -58,7 +58,10 @@ builder.Services.AddCors(options => options.AddPolicy(name: "NgOrigins",
     }));
 
 
+
+
 builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -68,9 +71,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseCors("NgOrigins");
+
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
+
+app.UseAuthorization();
+
+
+
 app.MapControllers();
+
 app.Run();

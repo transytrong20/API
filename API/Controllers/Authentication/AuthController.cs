@@ -11,13 +11,12 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 
-namespace API.Controllers
+namespace API.Controllers.Authentication
 {
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
-        //public static User user = new User();
         private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
         private readonly DataContext _dataContext;
@@ -45,8 +44,8 @@ namespace API.Controllers
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt
             };
-            
-            
+
+
             await _dataContext.AddAsync(user);
             await _dataContext.SaveChangesAsync();
             return Ok(user);
@@ -55,7 +54,7 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserDto request)
         {
-            var user = _dataContext.Users.FirstOrDefault(x=> x.Username == request.Username);
+            var user = _dataContext.Users.FirstOrDefault(x => x.Username == request.Username);
             if (user.Username != request.Username)
             {
                 return BadRequest("User not found.");
@@ -109,7 +108,6 @@ namespace API.Controllers
         private void SetRefreshToken(RefreshToken newRefreshToken)
         {
             var user = new User();
-            //var user = _dataContext.Users.FirstOrDefault();
 
             var cookieOptions = new CookieOptions
             {
@@ -128,7 +126,7 @@ namespace API.Controllers
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, "Admin")
+                new Claim(ClaimTypes.Role, "User")
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
