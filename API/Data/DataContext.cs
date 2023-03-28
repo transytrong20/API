@@ -23,7 +23,6 @@ namespace API.Data
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Transport> Transports { get; set; }
-
     }
 
 }

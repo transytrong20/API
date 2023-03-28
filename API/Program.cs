@@ -1,4 +1,5 @@
 using API.Data;
+using API.Services.Product;
 using API.Services.UserService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 //scoped
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 //bearer jwt
 builder.Services.AddHttpContextAccessor();

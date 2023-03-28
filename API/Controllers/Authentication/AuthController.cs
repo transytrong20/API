@@ -76,7 +76,7 @@ namespace API.Controllers.Authentication
         //[HttpPost("refresh-token")]
         //public async Task<ActionResult<string>> RefreshToken()
         //{
-        //    var user = new User();
+        //    var user = _dataContext.Users.FirstOrDefault(x => x.RefreshToken != null);
         //    var refreshToken = Request.Cookies["refreshToken"];
         //    if (!user.RefreshToken.Equals(refreshToken))
         //    {
