@@ -12,7 +12,7 @@ namespace API.Data
 
         }
         // saver db my sql
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Bill> Bills { get; set; }

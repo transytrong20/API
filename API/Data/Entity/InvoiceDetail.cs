@@ -1,14 +1,20 @@
 ﻿ using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace API.Data.Entity
 {
     public class InvoiceDetail
     {
-        [ForeignKey("invoicedetail_id")]
+        [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
-        public Guid BillId { get; set; }
-        public Guid PruductId { get; set; }
+        //[Required]
+        //public Guid BillId { get; set; }
+        //[Required]
+        //public Guid PruductId { get; set; }
+        [Required]
         public double Quantity { get; set; }
+        [Required]
         public double Amount { get; set; }
 
         [ForeignKey("bill_id")]

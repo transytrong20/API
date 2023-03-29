@@ -1,5 +1,6 @@
 using API.Data;
-using API.Services.Product;
+//using API.Repository.Products;
+using API.Services.Products;
 using API.Services.UserService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;

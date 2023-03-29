@@ -1,21 +1,32 @@
 ﻿using API.Helper.Enum;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Data.Entity
 {
     public class Bill
     {
-        [ForeignKey("bill_id")]
+        [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
-        public Guid PaymentId { get; set; }
-        public Guid CustomerId { get; set; }
-        public Guid TransportId { get; set; }
+        //[Required]
+        //public Guid PaymentId { get; set; }
+        //[Required]
+        //public Guid CustomerId { get; set; }
+        //[Required]
+        //public Guid TransportId { get; set; }
+        [Required]
         public DateTime PurchaseDate { get; set; } = DateTime.Now;
+        [Required]
         public DateTime DeliveryDate { get; set;}
+        [Required]
         public StatusBill Status { get; set; }
+        [Required]
         public string NickName { get; set; }  = string.Empty;
+        [Required]
         public string Phone { get; set;} = string.Empty;
+        [Required]
         public string email { get; set; } = string.Empty;
+        [Required]
         public string? Note { get; set;}
 
         public virtual ICollection<InvoiceDetail> Invoices { get; set; }

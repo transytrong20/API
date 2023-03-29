@@ -1,37 +1,49 @@
-﻿using API.Data;
-using API.DTO.Products;
-using API.Services.Product;
-using Microsoft.AspNetCore.Authorization;
+﻿using API.DTO.Products;
+using API.Services.Products;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Product
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : Controller
+    public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
         public ProductController(IProductService productService)
-            
+
         {
             _productService = productService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetProduct()
+
+
+        [HttpPost("GetAllProduct")]
+        public IActionResult GetAllProducts(string? search)
         {
-            var result = _productService.GrtList();
-            return Ok(result);
+            try
+            {
+                var result = _productService.GetAll(search);
+                return Ok(result);
+            }
+            catch
+            {
+                return BadRequest("...");
+            }
         }
 
-
-
-        //[HttpPost]
-        //public async IActionResult CreateProduct(ProductDto product)
-        //{
-        //    var result = await _productService.CreateProduct(product);
-        //    return result;
-        //}
+        [HttpPost("CreateProduct")]
+        public IActionResult CreateProduct(ProductDto product)
+        {
+            try
+            {
+                var result = _productService.Create(product);
+                return Ok(result);
+            }
+            catch
+            {
+                return BadRequest("...");
+            }
+        }
     }
 }

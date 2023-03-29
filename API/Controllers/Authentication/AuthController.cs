@@ -1,6 +1,7 @@
 ﻿using API.Data;
 using API.Data.Entity;
 using API.DTO.Users;
+using API.Helper.Enum;
 using API.Services.UserService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -35,26 +36,51 @@ namespace API.Controllers.Authentication
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(UserDto request)
+        public async Task<ActionResult<Customer>> Register(UserDto request)
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            var user = new User()
+            var user = new Customer()
             {
                 Username = request.Username,
                 PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt
+                PasswordSalt = passwordSalt,
+                Name = request.Name,
+                Address = request.Address,
+                Email = request.Email,
+                PhoneNumber = request.PhoneNumber,
+                Gender = request.Gender,
+                Status = request.Status,
             };
+            //var users = _dataContext.Customers.First(x => x.Username != request.Username);
 
+            //if (request.Username == users.Username)
+            //{
+            //    return BadRequest("Tài khoải đã tồn tại");
+            //}
+            //if (user.Username != request.Username)
+            //{
+            //    user.Username = request.Username;
+            //    user.PasswordHash = passwordHash;
+            //    user.PasswordSalt = passwordSalt;
+
+            //    user.Name = request.Name;
+            //    user.Address = request.Address;
+            //    user.Email = request.Email;
+            //    user.PhoneNumber = request.PhoneNumber;
+            //    user.Gender = request.Gender;
+            //    user.Status = request.Status;
+            //};
 
             await _dataContext.AddAsync(user);
             await _dataContext.SaveChangesAsync();
             return Ok(user);
+
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login(UserDto request)
+        public async Task<ActionResult<string>> Login(UserLoginDto request)
         {
-            var user = _dataContext.Users.FirstOrDefault(x => x.Username == request.Username);
+            var user = _dataContext.Customers.FirstOrDefault(x => x.Username == request.Username);
             if (user.Username != request.Username)
             {
                 return BadRequest("User not found.");
@@ -107,7 +133,7 @@ namespace API.Controllers.Authentication
 
         private void SetRefreshToken(RefreshToken newRefreshToken)
         {
-            var user = new User();
+            var user = new Customer();
 
             var cookieOptions = new CookieOptions
             {
@@ -121,7 +147,7 @@ namespace API.Controllers.Authentication
             user.TokenExpires = newRefreshToken.Expires;
         }
 
-        private string CreateToken(User user)
+        private string CreateToken(Customer user)
         {
             List<Claim> claims = new List<Claim>
             {
