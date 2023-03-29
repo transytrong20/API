@@ -1,4 +1,5 @@
 ﻿using API.Data;
+using Newtonsoft.Json;
 using System.Security.Claims;
 
 namespace API.Services.UserService
@@ -21,11 +22,21 @@ namespace API.Services.UserService
 
             if (_httpContextAccessor.HttpContext != null)
             {
-                result = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
+                var claims = _httpContextAccessor.HttpContext.User;
+                var user = new userlogin();
+                user.Name = claims.FindFirstValue(ClaimTypes.Name);
+                user.Roles = claims.FindAll(ClaimTypes.Role).Select(x => x.Value).ToArray();
 
+                result = JsonConvert.SerializeObject(user);
             }
            
             return result;
         }
+    }
+
+    public class userlogin
+    {
+        public string Name { get; set; }
+        public string[] Roles { get; set; }
     }
 }

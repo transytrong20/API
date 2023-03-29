@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text.Json.Serialization;
 
 namespace API.Controllers.Authentication
 {
@@ -149,9 +151,13 @@ namespace API.Controllers.Authentication
 
         private string CreateToken(Customer user)
         {
+            var roles = new string[] { "User", "Manager" };
+            var roleJson = JsonConvert.SerializeObject(roles);
+
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Role, "Admin"),
                 new Claim(ClaimTypes.Role, "User")
             };
 
