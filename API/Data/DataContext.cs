@@ -24,11 +24,11 @@ namespace API.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Transport> Transports { get; set; }
     }
-    protected override void OnModelCreating(ModelBuilder m)
-    {
-        m.Entity<Bill>(e =>
-        {
-            e.HasData();
-        });
-    }
+    //protected override void OnModelCreating(ModelBuilder m)
+    //{
+    //    m.Entity<Bill>(e =>
+    //    {
+    //        e.HasData();
+    //    });
+    //}
 }
