@@ -1,0 +1,45 @@
+Tính đóng gói : Không thể thay đổi thông tin trực tiếp của các property mà phải thông qua các cổng, các hàm,...
+Tính trừu tượng: Cho phép tập trung vào các thông tin quan trọng và bỏ qua các thông tin không cần thiết
+Tính kế thừa: Các đối tượng con sẽ bao gồm các property, các func của đối tượng cha
+Tính đa hình: Các đối tượng khác nhau có các hàm khác nhau và cách thực thi khác nhau - thể hiện qua overide và overload
+Overide - Ghi đè
+Overload - nạp chồng
+
+
+200 - success
+204 - no content
+400 - bad request
+404 - not found
+405 - icorect data type
+500 - server internal
+401 - unauthorize
+403 - forbiden
+
+
+async Func => Cho phép sử dụng await
+await => Yêu cầu luồng hiện tại chờ thực hiện xong Task mà không block luồng
+Task.GetAwait() hoặc Task.GetResult() => Yêu cầu luồng hiện tại chờ thực hiện xong Task và block luồng
+Bất đồng bộ là cách lập trình sao cho Các tác vụ có thể thực hiện song song trên cùng 1 luồng, điều này giúp giảm thời gian thực hiện các request
+Nếu trong 1 đoạn code, bạn sử dụng await tất cả các Task thì về cơ bản, Đoạn code đó đang chạy đồng bộ
+VD:
+async Task AsyncAwaitFunc(){
+   await TaskA();
+   await TaskB();
+} 
+async Task NormalFunc(){
+   AFunc();
+   BFunc();
+}
+Thời gian thực hiện của cả 2 hàm trên là như nhau với TaskA = AFunc và TaskB = BFunc
+=>> Luồng code sẽ là chờ TaskA hoàn thành và làm TaskB
+Ta nói cả 2 hàm trên đều chạy đồng bộ
+void Func(){
+   TaskA();
+   TaskB();
+}
+=>> TaskA và TaskB chạy cùng lúc trên luồng, hàm sẽ được trả về ngay lập tức
+async Task AsyncFunc(){
+  TaskA(); // Tốn 10s
+  await TaskB(); Tốn 3s
+}
+Khi gọi await AsyncFunc(), tổng thời gian toàn bộ hàm sẽ là 10s vì TaskA tốn 10s để thực hiện và trong khi TaskA thực hiện thì TaskB cũng thực hiện. Tuy nhiên, vì ta gọi await cả hàm AsyncFunc() nên luồng sẽ chờ cho TaskA() chạy xong và trả về Task.Completed thì code mới có thể chạy tiếp

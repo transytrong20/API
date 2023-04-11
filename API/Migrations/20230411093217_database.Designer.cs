@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230329083055_data")]
-    partial class data
+    [Migration("20230411093217_database")]
+    partial class database
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,6 +66,10 @@ namespace API.Migrations
                     b.Property<DateTime>("DeliveryDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("NickName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -86,10 +90,6 @@ namespace API.Migrations
 
                     b.Property<Guid>("customer_id")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("payment_id")
                         .HasColumnType("uniqueidentifier");
@@ -241,7 +241,7 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Amount")
+                    b.Property<double>("Price")
                         .HasColumnType("float");
 
                     b.Property<double>("Quantity")
@@ -296,6 +296,9 @@ namespace API.Migrations
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
@@ -369,13 +372,13 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Data.Entity.FeedBack", b =>
                 {
-                    b.HasOne("API.Data.Entity.Customer", "CustomerCustomer")
+                    b.HasOne("API.Data.Entity.Customer", "Customer")
                         .WithMany("FeedBacks")
                         .HasForeignKey("customer_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CustomerCustomer");
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("API.Data.Entity.InvoiceDetail", b =>

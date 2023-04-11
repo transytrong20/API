@@ -1,5 +1,5 @@
 using API.Data;
-//using API.Repository.Products;
+using API.Services.Groups;
 using API.Services.Products;
 using API.Services.UserService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -22,11 +22,12 @@ var ConnectionString = builder.Configuration.GetConnectionString("Default");
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(ConnectionString);
-});
+}, ServiceLifetime.Scoped);
 
 //scoped
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IGroupService, GroupService>();
 
 //bearer jwt
 builder.Services.AddHttpContextAccessor();

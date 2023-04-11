@@ -29,7 +29,7 @@ namespace API.Services.Products
             return products;
         }
 
-        public List<ProductDto> GetAll(string? search)
+        public List<ProductDto> Search(string? search, double? from, double? to)
         {
             try
             {
@@ -39,7 +39,10 @@ namespace API.Services.Products
                 {
                     products = products.Where(p => p.ProductName.Contains(search) );
                 }
-                
+                //if (from.HasValue && to.HasValue)
+                //{
+                //    products = products.Where(x => x.Price ==)
+                //}
                 var result = products.Select(p => new ProductDto
                 {
                     ProductName = p.ProductName,
@@ -47,7 +50,9 @@ namespace API.Services.Products
                     Description = p.Description,
                     Quantity = p.Quantity,
                     Image = p.Image,
-                    Status = p.Status
+                    Status = p.Status,
+                    GoodsId = p.Goodss.Id,
+                    GruopId = p.Groups.Id,
                 });
                 return result.ToList();
             }

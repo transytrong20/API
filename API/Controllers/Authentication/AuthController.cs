@@ -41,37 +41,26 @@ namespace API.Controllers.Authentication
         public async Task<ActionResult<Customer>> Register(UserDto request)
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            var user = new Customer()
+            var user = new Customer();
+            var users = _dataContext.Customers.FirstOrDefault();
+            var userName = users.Username;
+            if (request.Username == userName)
             {
-                Username = request.Username,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
-                Name = request.Name,
-                Address = request.Address,
-                Email = request.Email,
-                PhoneNumber = request.PhoneNumber,
-                Gender = request.Gender,
-                Status = request.Status,
+                return BadRequest("Tài khoải đã tồn tại");
+            }
+            if (user.Username != request.Username)
+            {
+                user.Username = request.Username;
+                user.PasswordHash = passwordHash;
+                user.PasswordSalt = passwordSalt;
+
+                user.Name = request.Name;
+                user.Address = request.Address;
+                user.Email = request.Email;
+                user.PhoneNumber = request.PhoneNumber;
+                user.Gender = request.Gender;
+                user.Status = request.Status;
             };
-            //var users = _dataContext.Customers.First(x => x.Username != request.Username);
-
-            //if (request.Username == users.Username)
-            //{
-            //    return BadRequest("Tài khoải đã tồn tại");
-            //}
-            //if (user.Username != request.Username)
-            //{
-            //    user.Username = request.Username;
-            //    user.PasswordHash = passwordHash;
-            //    user.PasswordSalt = passwordSalt;
-
-            //    user.Name = request.Name;
-            //    user.Address = request.Address;
-            //    user.Email = request.Email;
-            //    user.PhoneNumber = request.PhoneNumber;
-            //    user.Gender = request.Gender;
-            //    user.Status = request.Status;
-            //};
 
             await _dataContext.AddAsync(user);
             await _dataContext.SaveChangesAsync();

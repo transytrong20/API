@@ -4,12 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Data.Entity
 {
-    public class Customer
+    public class Customer //Bảng khách hàng
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
 
-
+        //tài khoản
         [Required]
         public string Username { get; set; }
         public byte[] PasswordHash { get; set; }
@@ -18,7 +18,7 @@ namespace API.Data.Entity
         public DateTime TokenCreated { get; set; }
         public DateTime TokenExpires { get; set; }
 
-
+        //thông tin khách hàng
         [Required]
         public string Name { get; set; } = string.Empty;
         [Required]
@@ -35,8 +35,6 @@ namespace API.Data.Entity
 
         public virtual ICollection<FeedBack> FeedBacks { get; set; }
         public virtual ICollection<Bill> Bills { get; set; }
-        //[ForeignKey("User")]
-        //public User Users { get; set; }
-        
+
     }
 }

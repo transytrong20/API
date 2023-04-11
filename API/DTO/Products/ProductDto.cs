@@ -13,5 +13,8 @@ namespace API.DTO.Products
         public double Quantity { get; set; }
         public string Image { get; set; }
         public StatusProduct Status { get; set; }
+
+        public Guid GruopId { get; set; }
+        public Guid GoodsId { get; set; }
     }
 }

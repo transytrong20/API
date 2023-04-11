@@ -6,7 +6,7 @@ namespace API.Services.Products
 {
     public interface IProductService
     {
-        public List<ProductDto> GetAll(string? search);
+        public List<ProductDto> Search(string? search, double? from, double? to);
         public Task<ActionResult<Product>> Create(ProductDto product);
     }
 }

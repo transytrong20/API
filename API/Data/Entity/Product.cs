@@ -5,24 +5,22 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.Data.Entity
 {
-    public class Product
+    public class Product //sản phẩm
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
-        //[Required]
-        //public Guid GroupId { get; set; }
-        //[Required]
-        //public Guid GoodsId { get; set; }
         [Required]
-        public string ProductName { get; set; }
+        public string ProductName { get; set; } = string.Empty;
         [Required]
         public DateTime Date { get; set; }
         [Required]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [Required]
         public double Quantity { get; set; }
         [Required]
-        public string Image { get; set; }
+        public decimal Price { get; set; }
+        [Required]
+        public string Image { get; set; } = string.Empty.ToString();
         [Required]
         public StatusProduct Status { get; set; }
 

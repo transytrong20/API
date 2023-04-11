@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.Data.Entity
 {
-    public class Payment
+    public class Payment //thanh toán
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();

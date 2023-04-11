@@ -4,16 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Data.Entity
 {
-    public class Bill
+    public class Bill //hoá đơn
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
-        //[Required]
-        //public Guid PaymentId { get; set; }
-        //[Required]
-        //public Guid CustomerId { get; set; }
-        //[Required]
-        //public Guid TransportId { get; set; }
         [Required]
         public DateTime PurchaseDate { get; set; } = DateTime.Now;
         [Required]
@@ -25,7 +19,7 @@ namespace API.Data.Entity
         [Required]
         public string Phone { get; set;} = string.Empty;
         [Required]
-        public string email { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
         [Required]
         public string? Note { get; set;}
 

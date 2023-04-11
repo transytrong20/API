@@ -4,12 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Data.Entity
 {
-    public class FeedBack
+    public class FeedBack //bảng phản hồi
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
-        //[Required]
-        //public Guid CustomerId { get; set; }
         [Required]
         public DateTime ResponseDate { get; set; } = DateTime.Now;
         [Required]
@@ -23,6 +21,6 @@ namespace API.Data.Entity
 
 
         [ForeignKey("customer_id")]
-        public Customer CustomerCustomer { get; set; }
+        public Customer Customer { get; set; }
     }
 }
