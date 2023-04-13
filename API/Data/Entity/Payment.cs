@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.Data.Entity
 {
+    [Table("Payment")]
     public class Payment //thanh toán
     {
         [Key]

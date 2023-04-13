@@ -41,13 +41,11 @@ namespace API.Controllers.Authentication
         public async Task<ActionResult<Customer>> Register(UserDto request)
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            if (_dataContext.Customers.Any(_ => _.Username.ToLower() == request.Username.ToLower()))
+                return BadRequest("Tài khoản đã tồn tại");
+
             var user = new Customer();
-            var users = _dataContext.Customers.FirstOrDefault();
-            var userName = users.Username;
-            if (request.Username == userName)
-            {
-                return BadRequest("Tài khoải đã tồn tại");
-            }
             if (user.Username != request.Username)
             {
                 user.Username = request.Username;

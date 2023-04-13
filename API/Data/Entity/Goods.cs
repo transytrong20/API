@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Data.Entity
 {
+    [Table("Goods")]
     public class Goods //các mặt hàng
     {
         //các mặt hàng

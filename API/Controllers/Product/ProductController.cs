@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Product
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
@@ -20,16 +20,16 @@ namespace API.Controllers.Product
 
 
         [HttpPost("SearchProduct")]
-        public IActionResult SearchProducts(string? search, double? from, double? to)
+        public  IActionResult SearchProducts(string? search, double? from, double? to)
         {
-            var result = _productService.Search(search, from, to);
+            var result =  _productService.Search(search, from, to);
             return Ok(result);
         }
 
         [HttpPost("CreateProduct")]
-        public IActionResult CreateProduct(ProductDto product)
+        public async Task<IActionResult> CreateProduct(CreateProduct product)
         {
-            var result = _productService.Create(product);
+            var result = await _productService.Create(product);
             return Ok(result);
         }
 

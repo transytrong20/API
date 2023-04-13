@@ -52,13 +52,16 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Admins");
+                    b.ToTable("Admin", (string)null);
                 });
 
             modelBuilder.Entity("API.Data.Entity.Bill", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DeliveryDate")
@@ -76,6 +79,9 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("PaymentId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -86,24 +92,18 @@ namespace API.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("customer_id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("payment_id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("transport_id")
+                    b.Property<Guid>("TransportId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("customer_id");
+                    b.HasIndex("CustomerId");
 
-                    b.HasIndex("payment_id");
+                    b.HasIndex("PaymentId");
 
-                    b.HasIndex("transport_id");
+                    b.HasIndex("TransportId");
 
-                    b.ToTable("Bills");
+                    b.ToTable("Bill", (string)null);
                 });
 
             modelBuilder.Entity("API.Data.Entity.Customer", b =>
@@ -158,13 +158,15 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customer", (string)null);
                 });
 
             modelBuilder.Entity("API.Data.Entity.FeedBack", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FeedbackContent")
@@ -185,14 +187,11 @@ namespace API.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("customer_id")
-                        .HasColumnType("uniqueidentifier");
+                    b.HasKey("Id", "CustomerId");
 
-                    b.HasKey("Id");
+                    b.HasIndex("CustomerId");
 
-                    b.HasIndex("customer_id");
-
-                    b.ToTable("FeedBacks");
+                    b.ToTable("FeedBack", (string)null);
                 });
 
             modelBuilder.Entity("API.Data.Entity.Goods", b =>
@@ -211,7 +210,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Goodss");
+                    b.ToTable("Goods", (string)null);
                 });
 
             modelBuilder.Entity("API.Data.Entity.Group", b =>
@@ -230,7 +229,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Groups");
+                    b.ToTable("Group", (string)null);
                 });
 
             modelBuilder.Entity("API.Data.Entity.InvoiceDetail", b =>
@@ -239,25 +238,25 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("BillId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<double>("Price")
                         .HasColumnType("float");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Quantity")
                         .HasColumnType("float");
 
-                    b.Property<Guid>("bill_id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("product_id")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("bill_id");
+                    b.HasIndex("BillId");
 
-                    b.HasIndex("product_id");
+                    b.HasIndex("ProductId");
 
-                    b.ToTable("InvoiceDetails");
+                    b.ToTable("InvoiceDetail", (string)null);
                 });
 
             modelBuilder.Entity("API.Data.Entity.Payment", b =>
@@ -275,7 +274,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payment", (string)null);
                 });
 
             modelBuilder.Entity("API.Data.Entity.Product", b =>
@@ -290,6 +289,12 @@ namespace API.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("GoodsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Image")
                         .IsRequired()
@@ -308,19 +313,13 @@ namespace API.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("goods_id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("group_id")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("goods_id");
+                    b.HasIndex("GoodsId");
 
-                    b.HasIndex("group_id");
+                    b.HasIndex("GroupId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Product", (string)null);
                 });
 
             modelBuilder.Entity("API.Data.Entity.Transport", b =>
@@ -338,28 +337,31 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Transports");
+                    b.ToTable("Transport");
                 });
 
             modelBuilder.Entity("API.Data.Entity.Bill", b =>
                 {
                     b.HasOne("API.Data.Entity.Customer", "Customers")
                         .WithMany("Bills")
-                        .HasForeignKey("customer_id")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Bill_Customer");
 
                     b.HasOne("API.Data.Entity.Payment", "Payments")
                         .WithMany("Bills")
-                        .HasForeignKey("payment_id")
+                        .HasForeignKey("PaymentId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Bill_Payment");
 
                     b.HasOne("API.Data.Entity.Transport", "Transports")
                         .WithMany("Bills")
-                        .HasForeignKey("transport_id")
+                        .HasForeignKey("TransportId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Bill_Transport");
 
                     b.Navigation("Customers");
 
@@ -372,9 +374,10 @@ namespace API.Migrations
                 {
                     b.HasOne("API.Data.Entity.Customer", "Customer")
                         .WithMany("FeedBacks")
-                        .HasForeignKey("customer_id")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_FeedBack_Customer");
 
                     b.Navigation("Customer");
                 });
@@ -382,16 +385,18 @@ namespace API.Migrations
             modelBuilder.Entity("API.Data.Entity.InvoiceDetail", b =>
                 {
                     b.HasOne("API.Data.Entity.Bill", "Bills")
-                        .WithMany("Invoices")
-                        .HasForeignKey("bill_id")
+                        .WithMany("InvoiceDetails")
+                        .HasForeignKey("BillId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_InvoiceDetail_Bill");
 
                     b.HasOne("API.Data.Entity.Product", "Pruducts")
                         .WithMany("InvoiceDetails")
-                        .HasForeignKey("product_id")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_InvoiceDetail_Product");
 
                     b.Navigation("Bills");
 
@@ -402,15 +407,17 @@ namespace API.Migrations
                 {
                     b.HasOne("API.Data.Entity.Goods", "Goodss")
                         .WithMany("Products")
-                        .HasForeignKey("goods_id")
+                        .HasForeignKey("GoodsId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Product_Goods");
 
                     b.HasOne("API.Data.Entity.Group", "Groups")
                         .WithMany("Products")
-                        .HasForeignKey("group_id")
+                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Product_Group");
 
                     b.Navigation("Goodss");
 
@@ -419,7 +426,7 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Data.Entity.Bill", b =>
                 {
-                    b.Navigation("Invoices");
+                    b.Navigation("InvoiceDetails");
                 });
 
             modelBuilder.Entity("API.Data.Entity.Customer", b =>

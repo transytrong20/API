@@ -5,7 +5,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.Data.Entity
 {
-    public class Transport //vậnn chuyển
+    [Table("Transport")]
+    public class Transport //vận chuyển
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();

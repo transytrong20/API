@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.Data.Entity
 {
+    [Table("Product")]
     public class Product //sản phẩm
     {
         [Key]
@@ -28,9 +29,12 @@ namespace API.Data.Entity
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
 
 
-        [ForeignKey("group_id")]
+        public Guid GroupId { get; set; }
+        //[ForeignKey("group_id")]
         public Group Groups { get; set; }
-        [ForeignKey("goods_id")]
+
+        public Guid GoodsId { get; set; }
+        //[ForeignKey("goods_id")]
         public Goods Goodss { get; set; }
 
     }

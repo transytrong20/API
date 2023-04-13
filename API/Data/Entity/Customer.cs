@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Data.Entity
 {
+    [Table("Customer")]
     public class Customer //Bảng khách hàng
     {
         [Key]

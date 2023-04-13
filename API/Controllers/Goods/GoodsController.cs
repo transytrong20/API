@@ -17,9 +17,9 @@ namespace API.Controllers.Goods
         }
 
         [HttpPost("CreateGoods")]
-        public IActionResult CreateGoods(GoodsDto group)
+        public async Task<IActionResult> CreateGoods(GoodsDto group)
         {
-            var result = _goodsService.Create(group);
+            var result = await _goodsService.Create(group);
             return Ok(result);
         }
 

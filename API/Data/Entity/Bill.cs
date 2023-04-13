@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Data.Entity
 {
+    [Table("Bill")]
     public class Bill //hoá đơn
     {
         [Key]
@@ -23,13 +24,19 @@ namespace API.Data.Entity
         [Required]
         public string? Note { get; set;}
 
-        public virtual ICollection<InvoiceDetail> Invoices { get; set; }
+        public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
 
-        [ForeignKey("customer_id")]
+
+        public Guid CustomerId { get; set; }
+        //[ForeignKey("customer_id")]
         public Customer Customers { get; set; }
-        [ForeignKey("payment_id")]
+
+        public Guid PaymentId { get; set; }
+        //[ForeignKey("payment_id")]
         public Payment Payments { get; set; }
-        [ForeignKey("transport_id")]
+
+        public Guid TransportId { get; set; }
+        //[ForeignKey("transport_id")]
         public Transport Transports { get; set; }
     }
 }

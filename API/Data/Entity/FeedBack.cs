@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Data.Entity
 {
+    [Table("FeedBack")]
     public class FeedBack //bảng phản hồi
     {
         [Key]
@@ -20,7 +21,8 @@ namespace API.Data.Entity
         public StatusFeedBack Status { get; set; }
 
 
-        [ForeignKey("customer_id")]
+        public Guid CustomerId { get; set; }
+        //[ForeignKey("customer_id")]
         public Customer Customer { get; set; }
     }
 }

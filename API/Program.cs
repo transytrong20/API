@@ -1,4 +1,5 @@
 using API.Data;
+using API.Services.Goodss;
 using API.Services.Groups;
 using API.Services.Products;
 using API.Services.UserService;
@@ -28,6 +29,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IGroupService, GroupService>();
+builder.Services.AddScoped<IGoodsService, GoodsService>();
 
 //bearer jwt
 builder.Services.AddHttpContextAccessor();

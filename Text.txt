@@ -43,3 +43,8 @@ async Task AsyncFunc(){
   await TaskB(); Tốn 3s
 }
 Khi gọi await AsyncFunc(), tổng thời gian toàn bộ hàm sẽ là 10s vì TaskA tốn 10s để thực hiện và trong khi TaskA thực hiện thì TaskB cũng thực hiện. Tuy nhiên, vì ta gọi await cả hàm AsyncFunc() nên luồng sẽ chờ cho TaskA() chạy xong và trả về Task.Completed thì code mới có thể chạy tiếp
+
+
+
+oop là lập trình hướngg đối tượng là một phương pháp lập trình sử dụng để xây dựng ứng dụng
+OOP là phương pháp xây dựng hệ thống tập trung và xoay quanh các đối tượng hơn là xoay quanh logic, điều này giúp việc xây dựng, mở rộng và bảo trì code được dễ dàng hơn

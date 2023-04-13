@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Data.Entity
 {
+    [Table("Group")]
     public class Group //nhóm sản phẩm
     {
         //nhóm hàng

@@ -1,0 +1,31 @@
+** Điều bắt buộc phải biết
+- OOP
+- Collections
+- Variable type - Loại biến
+- Contst và enum
+- Basic data type: string, int, double, IFormFile,...
+
+** Các thành phần trong .NET core cần biết
+- Enviroment và file appsetting.json
+- Cơ chế Dependence Injection( autofac ) được tích hợp sẵn
+- Cải thiện tốc độ xử lý, tốc độ build,...
+- Bất đồng bộ
+
+** Design pattern
+- Repository Pattern - Gần như được sử dụng ở tất cả các project ở doanh nghiệp
+- Three Tier Pattern - Mô hình 3 lớp gồm:
+  + GUI Layer( view => controller ) 
+  + Business Layer(Service nghiệp vụ) 
+  + Data Acess Layer (Tầng tương tác với database)
+- Data tranfer object - Sử dụng nuget package AutoMapper
+
+** Cần biết
+- Sử dụng Dependence Inject khi nào, như nào, các loại timelife của intance được inject
+- Biết và dùng được cơ thế authentication - Sử dụng OAuth2 hoặc Json Web Token
+- File - Upload file từ client vào controller, save file, read file
+- DbContext, Migrate database - Code first
+
+** Nếu có thời gian thì nên học thêm
+- EPPlus - Đọc, tạo và xử lý file excel
+- Pipeline - middleware
+- Mail Service - mail server

@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class database : Migration
+    public partial class update : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Admins",
+                name: "Admin",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -23,11 +23,11 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Admins", x => x.Id);
+                    table.PrimaryKey("PK_Admin", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Customers",
+                name: "Customer",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -46,11 +46,11 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.PrimaryKey("PK_Customer", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Goodss",
+                name: "Goods",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -59,11 +59,11 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Goodss", x => x.Id);
+                    table.PrimaryKey("PK_Goods", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Groups",
+                name: "Group",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -72,11 +72,11 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Groups", x => x.Id);
+                    table.PrimaryKey("PK_Group", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Payments",
+                name: "Payment",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -85,11 +85,11 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Payments", x => x.Id);
+                    table.PrimaryKey("PK_Payment", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Transports",
+                name: "Transport",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -98,34 +98,34 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Transports", x => x.Id);
+                    table.PrimaryKey("PK_Transport", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "FeedBacks",
+                name: "FeedBack",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ResponseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ResponseHeaders = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FeedbackContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ReplyToFeedback = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    customer_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FeedBacks", x => x.Id);
+                    table.PrimaryKey("PK_FeedBack", x => new { x.Id, x.CustomerId });
                     table.ForeignKey(
-                        name: "FK_FeedBacks_Customers_customer_id",
-                        column: x => x.customer_id,
-                        principalTable: "Customers",
+                        name: "FK_FeedBack_Customer",
+                        column: x => x.CustomerId,
+                        principalTable: "Customer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "Product",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -136,28 +136,28 @@ namespace API.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    group_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    goods_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GoodsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_Product", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Goodss_goods_id",
-                        column: x => x.goods_id,
-                        principalTable: "Goodss",
+                        name: "FK_Product_Goods",
+                        column: x => x.GoodsId,
+                        principalTable: "Goods",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Products_Groups_group_id",
-                        column: x => x.group_id,
-                        principalTable: "Groups",
+                        name: "FK_Product_Group",
+                        column: x => x.GroupId,
+                        principalTable: "Group",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Bills",
+                name: "Bill",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -168,132 +168,132 @@ namespace API.Migrations
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    customer_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    payment_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    transport_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TransportId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bills", x => x.Id);
+                    table.PrimaryKey("PK_Bill", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Bills_Customers_customer_id",
-                        column: x => x.customer_id,
-                        principalTable: "Customers",
+                        name: "FK_Bill_Customer",
+                        column: x => x.CustomerId,
+                        principalTable: "Customer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Bills_Payments_payment_id",
-                        column: x => x.payment_id,
-                        principalTable: "Payments",
+                        name: "FK_Bill_Payment",
+                        column: x => x.PaymentId,
+                        principalTable: "Payment",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Bills_Transports_transport_id",
-                        column: x => x.transport_id,
-                        principalTable: "Transports",
+                        name: "FK_Bill_Transport",
+                        column: x => x.TransportId,
+                        principalTable: "Transport",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "InvoiceDetails",
+                name: "InvoiceDetail",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Quantity = table.Column<double>(type: "float", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
-                    bill_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    product_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    BillId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InvoiceDetails", x => x.Id);
+                    table.PrimaryKey("PK_InvoiceDetail", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_InvoiceDetails_Bills_bill_id",
-                        column: x => x.bill_id,
-                        principalTable: "Bills",
+                        name: "FK_InvoiceDetail_Bill",
+                        column: x => x.BillId,
+                        principalTable: "Bill",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_InvoiceDetails_Products_product_id",
-                        column: x => x.product_id,
-                        principalTable: "Products",
+                        name: "FK_InvoiceDetail_Product",
+                        column: x => x.ProductId,
+                        principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bills_customer_id",
-                table: "Bills",
-                column: "customer_id");
+                name: "IX_Bill_CustomerId",
+                table: "Bill",
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bills_payment_id",
-                table: "Bills",
-                column: "payment_id");
+                name: "IX_Bill_PaymentId",
+                table: "Bill",
+                column: "PaymentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bills_transport_id",
-                table: "Bills",
-                column: "transport_id");
+                name: "IX_Bill_TransportId",
+                table: "Bill",
+                column: "TransportId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FeedBacks_customer_id",
-                table: "FeedBacks",
-                column: "customer_id");
+                name: "IX_FeedBack_CustomerId",
+                table: "FeedBack",
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InvoiceDetails_bill_id",
-                table: "InvoiceDetails",
-                column: "bill_id");
+                name: "IX_InvoiceDetail_BillId",
+                table: "InvoiceDetail",
+                column: "BillId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InvoiceDetails_product_id",
-                table: "InvoiceDetails",
-                column: "product_id");
+                name: "IX_InvoiceDetail_ProductId",
+                table: "InvoiceDetail",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_goods_id",
-                table: "Products",
-                column: "goods_id");
+                name: "IX_Product_GoodsId",
+                table: "Product",
+                column: "GoodsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_group_id",
-                table: "Products",
-                column: "group_id");
+                name: "IX_Product_GroupId",
+                table: "Product",
+                column: "GroupId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Admins");
+                name: "Admin");
 
             migrationBuilder.DropTable(
-                name: "FeedBacks");
+                name: "FeedBack");
 
             migrationBuilder.DropTable(
-                name: "InvoiceDetails");
+                name: "InvoiceDetail");
 
             migrationBuilder.DropTable(
-                name: "Bills");
+                name: "Bill");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Product");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "Customer");
 
             migrationBuilder.DropTable(
-                name: "Payments");
+                name: "Payment");
 
             migrationBuilder.DropTable(
-                name: "Transports");
+                name: "Transport");
 
             migrationBuilder.DropTable(
-                name: "Goodss");
+                name: "Goods");
 
             migrationBuilder.DropTable(
-                name: "Groups");
+                name: "Group");
         }
     }
 }

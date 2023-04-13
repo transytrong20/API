@@ -2,6 +2,7 @@
 using API.Data.Entity;
 using API.DTO.Products;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace API.Services.Products
 {
@@ -13,7 +14,7 @@ namespace API.Services.Products
             _dataContext = dataContext;
         }
 
-        public async Task<ActionResult<Product>> Create(ProductDto product)
+        public async Task<ActionResult<Product>> Create(CreateProduct product)
         {
             var products = new Product()
             {
@@ -22,9 +23,12 @@ namespace API.Services.Products
                 Description = product.Description,
                 Image = product.Image,
                 Quantity = product.Quantity,
-                Status = product.Status
+                Price = product.Price,
+                Status = product.Status,
+                GroupId = product.GruopId,
+                GoodsId = product.GoodsId,
             };
-            await _dataContext.AddAsync(products);
+            await _dataContext.Products.AddAsync(products);
             await _dataContext.SaveChangesAsync();
             return products;
         }
@@ -37,7 +41,7 @@ namespace API.Services.Products
 
                 if (!string.IsNullOrEmpty(search))
                 {
-                    products = products.Where(p => p.ProductName.Contains(search) );
+                    products = products.Where(p => p.ProductName.Contains(search));
                 }
                 //if (from.HasValue && to.HasValue)
                 //{
@@ -49,6 +53,7 @@ namespace API.Services.Products
                     Date = p.Date,
                     Description = p.Description,
                     Quantity = p.Quantity,
+                    Price = p.Price,
                     Image = p.Image,
                     Status = p.Status,
                     GoodsId = p.Goodss.Id,

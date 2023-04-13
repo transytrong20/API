@@ -18,9 +18,9 @@ namespace API.Controllers.Group
             _groupService = groupService;
         }
         [HttpPost("CreateGroup")]
-        public IActionResult CreateGroup(GroupDto group)
+        public async Task<IActionResult> CreateGroup(GroupDto group)
         {
-            var result = _groupService.Create(group);
+            var result = await _groupService.Create(group);
             return Ok(result);
         }
     }
